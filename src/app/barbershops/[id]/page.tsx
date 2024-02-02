@@ -5,7 +5,7 @@ import prisma from "@/prisma/prisma.service"
 import Image from "next/image"
 import { MapPin, StarIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import ServiceCard from "./service-card"
+import ServiceCard from "../../../components/service/service-card"
 import BarbershopPageContent from "./content"
 
 interface BarbershopProps {

@@ -3,7 +3,7 @@
 import { CircleUserRound, LogInIcon, LogOutIcon, HomeIcon, CalendarDaysIcon, Contact2Icon, MenuIcon } from 'lucide-react'
 import React from 'react'
 import { Button } from '../ui/button'
-import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '../ui/sheet'
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '../ui/sheet'
 import MenuItem from './menu-item'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
@@ -43,7 +43,7 @@ export default function Menu() {
             </SheetTrigger>
             <SheetContent className='p-0 w-[95%]'>
                 <SheetHeader className='p-4 border-b-2'>
-                    <p className='text-lg font-bold text-left'>Menu</p>
+                    <SheetTitle className='text-lg font-bold text-left'>FSW Menu</SheetTitle>
                 </SheetHeader>
                 <div className='p-4'>
                     {!data?.user && (

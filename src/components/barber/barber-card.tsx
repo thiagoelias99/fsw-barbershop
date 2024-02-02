@@ -41,7 +41,7 @@ export default function BarberCard({ barber, className }: BarberCardProps) {
                         <Button
                             variant="secondary"
                             className='w-full mt-2 hover:bg-primary mb-1'
-                        >Reservar</Button>
+                        >Ver Serviços</Button>
                     </NextLink>
                 </CardContent>
             </Card>
