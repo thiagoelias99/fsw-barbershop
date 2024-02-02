@@ -1,16 +1,19 @@
 'use client'
 
 import { ptBR } from 'date-fns/locale'
-import React, { use, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { SheetContent, SheetHeader, SheetTitle } from '../ui/sheet'
 import { Calendar } from '../ui/calendar'
 import { generateDayTimeList } from './hours'
 import { Button } from '../ui/button'
 import { Card, CardContent } from '../ui/card'
-import { format } from 'date-fns'
+import { format, setHours, setMinutes } from 'date-fns'
+import createBooking from './book-service'
+import { useSession } from 'next-auth/react'
 
 interface ServiceCardProps {
     service: {
+        id: string
         name: string
         description: string
         price: number
@@ -23,6 +26,7 @@ interface ServiceCardProps {
 }
 
 export default function ServiceBooking({ service, barbershop }: ServiceCardProps) {
+    const session = useSession()
     const [date, setDate] = useState<Date | undefined>(undefined)
     const [selectedTime, setSelectedTime] = useState<string | undefined>(undefined)
 
@@ -38,6 +42,17 @@ export default function ServiceBooking({ service, barbershop }: ServiceCardProps
     function handleDateSelection(date: Date | undefined) {
         setDate(date)
         setSelectedTime(undefined)
+    }
+
+    async function handleConfirm() {
+        let bookingDate = setHours(date!, parseInt(selectedTime!.split(':')[0]))
+        bookingDate = setMinutes(bookingDate, parseInt(selectedTime!.split(':')[1]))
+
+        await createBooking({
+            date: bookingDate,
+            userId: session.data?.user?.id as string,
+            serviceId: service.id
+        })
     }
 
     return (
@@ -116,7 +131,9 @@ export default function ServiceBooking({ service, barbershop }: ServiceCardProps
             </Card>
             {date && selectedTime && (
                 <div className='w-full p-4 mt-8'>
-                    <Button className='w-full'>
+                    <Button
+                        onClick={handleConfirm}
+                        className='w-full'>
                         Confirmar
                     </Button>
                 </div>

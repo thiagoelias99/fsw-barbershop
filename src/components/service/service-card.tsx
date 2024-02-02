@@ -10,6 +10,7 @@ import ServiceBooking from "./service-booking"
 
 interface ServiceCardProps {
     service: {
+        id: string
         name: string
         description: string
         price: number
