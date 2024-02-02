@@ -4,6 +4,7 @@ import Search from "@/components/search/search";
 import BodyText from "@/components/ui/typography/body";
 import Header1 from "@/components/ui/typography/header1";
 import Header4 from "@/components/ui/typography/header4";
+import WelcomeUser from "@/components/ui/typography/welcome-user";
 import prisma from "@/prisma/prisma.service";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -16,7 +17,7 @@ export default async function Home() {
   return (
     <main>
       <section className="p-4">
-        <Header1 text="Olá Thiago!" />
+        <WelcomeUser />
         <BodyText text={date} className="capitalize" />
       </section>
       <section className="p-4">
