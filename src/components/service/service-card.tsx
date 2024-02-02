@@ -5,6 +5,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import Header3 from "@/components/ui/typography/header3"
 import { signIn, useSession } from "next-auth/react"
 import Image from "next/image"
+import { Sheet, SheetTrigger } from "../ui/sheet"
+import ServiceBooking from "./service-booking"
 
 interface ServiceCardProps {
     service: {
@@ -12,16 +14,18 @@ interface ServiceCardProps {
         description: string
         price: number
         imageUrl: string
+    },
+    barbershop: {
+        id: string
+        name: string
     }
 }
 
-export default function ServiceCard({ service }: ServiceCardProps) {
+export default function ServiceCard({ service, barbershop }: ServiceCardProps) {
     const { status } = useSession()
 
     function handleReserve() {
-        if (status === "authenticated") {
-            alert('Reservado com sucesso!')
-        } else {
+        if (status !== "authenticated") {
             signIn()
         }
     }
@@ -42,10 +46,15 @@ export default function ServiceCard({ service }: ServiceCardProps) {
                     <p className="text-sm text-gray03 overflow-ellipsis">{service.description}</p>
                     <div className="w-full flex flex-row items-center justify-between">
                         <p className="text-base text-primary font-bold">{`R$ ${service.price.toFixed(2).replace(".", ",")}`}</p>
-                        <Button 
-                        variant="secondary"
-                        onClick={handleReserve}
-                        >Reservar</Button>
+                        <Sheet>
+                            <SheetTrigger asChild>
+                                <Button
+                                    variant="secondary"
+                                    onClick={handleReserve}
+                                >Reservar</Button>
+                            </SheetTrigger>
+                            <ServiceBooking service={service} barbershop={barbershop} />
+                        </Sheet>
                     </div>
                 </div>
             </CardContent>

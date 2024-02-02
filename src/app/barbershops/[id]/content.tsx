@@ -39,7 +39,7 @@ export default function BarbershopPageContent({barbershop, services} : Barbersho
                 </div>
                 <div className="flex flex-col gap-4 mt-6">
                     {services.map((service) => (
-                        <ServiceCard key={service.id} service={service} />
+                        <ServiceCard key={service.id} service={service} barbershop={barbershop} />
                     ))}
                 </div>
             </section>
