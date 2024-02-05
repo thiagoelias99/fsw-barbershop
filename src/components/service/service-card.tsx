@@ -7,6 +7,7 @@ import { signIn, useSession } from "next-auth/react"
 import Image from "next/image"
 import { Sheet, SheetTrigger } from "../ui/sheet"
 import ServiceBooking from "./service-booking"
+import { useState } from "react"
 
 interface ServiceCardProps {
     service: {
@@ -24,6 +25,7 @@ interface ServiceCardProps {
 
 export default function ServiceCard({ service, barbershop }: ServiceCardProps) {
     const { status } = useSession()
+    const [openSheet, setOpenSheet] = useState(false)
 
     function handleReserve() {
         if (status !== "authenticated") {
@@ -47,14 +49,18 @@ export default function ServiceCard({ service, barbershop }: ServiceCardProps) {
                     <p className="text-sm text-gray03 overflow-ellipsis">{service.description}</p>
                     <div className="w-full flex flex-row items-center justify-between">
                         <p className="text-base text-primary font-bold">{`R$ ${service.price.toFixed(2).replace(".", ",")}`}</p>
-                        <Sheet>
+                        <Sheet open={openSheet} onOpenChange={setOpenSheet} >
                             <SheetTrigger asChild>
                                 <Button
                                     variant="secondary"
                                     onClick={handleReserve}
                                 >Reservar</Button>
                             </SheetTrigger>
-                            <ServiceBooking service={service} barbershop={barbershop} />
+                            <ServiceBooking
+                                service={service}
+                                barbershop={barbershop}
+                                setOpenSheet={setOpenSheet}
+                            />
                         </Sheet>
                     </div>
                 </div>
