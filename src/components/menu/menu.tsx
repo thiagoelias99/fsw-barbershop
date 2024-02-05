@@ -10,18 +10,23 @@ import Image from 'next/image'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 
 export default function Menu() {
+    const [showSheet, setShowSheet] = React.useState(false)
+
     const menuItens = [
         {
             Icon: HomeIcon,
-            label: 'Início'
+            label: 'Início',
+            link: '/'
         },
         {
             Icon: Contact2Icon,
-            label: 'Perfil'
+            label: 'Perfil',
+            link: '/profile'
         },
         {
             Icon: CalendarDaysIcon,
-            label: 'Agendamentos'
+            label: 'Agendamentos',
+            link: '/bookings'
         }
     ]
 
@@ -35,7 +40,7 @@ export default function Menu() {
     }
 
     return (
-        <Sheet>
+        <Sheet open={showSheet} onOpenChange={setShowSheet}>
             <SheetTrigger asChild>
                 <Button variant="outline">
                     <MenuIcon size={20} />
@@ -84,7 +89,7 @@ export default function Menu() {
 
                     <div className='w-full mt-8 flex flex-col gap-2'>
                         {menuItens.map((item, index) => (
-                            <MenuItem key={index} Icon={item.Icon} label={item.label} />
+                            <MenuItem key={index} Icon={item.Icon} label={item.label} link={item.link} setShowSheet={setShowSheet} />
                         ))}
                     </div>
                 </div>

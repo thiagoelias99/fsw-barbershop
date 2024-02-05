@@ -8,24 +8,28 @@ import BookingTimeDisplay from "./booking-time-display"
 
 interface IBookingCardProps {
     className?: ClassNameValue
+    date: Date,
+    serviceName: string,
+    barbershopName: string,
+    barbershopUrl: string
 }
 
-const BookingCard = ({ className }: IBookingCardProps) => {
+const BookingCard = ({ className, barbershopName, barbershopUrl, date, serviceName }: IBookingCardProps) => {
     return (
         <Card className={`${className} h-[112px]`}>
             <CardContent className="h-full px-4 py-0 flex flex-row items-center justify-between">
                 <div className="h-full flex flex-col items-start justify-between py-2 flex-grow">
                     <Badge className="bg-purple-dark text-primary">Confirmado</Badge>
-                    <Header2 text="Corte de Cabelo" />
+                    <Header2 text={serviceName} />
                     <div className="flex flex-row items-center justify-start">
                         <Avatar className="h-6 w-6">
-                            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                            <AvatarImage src={barbershopUrl} alt={barbershopName} />
                             <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
-                        <BodyText text="Thiago Marinho" className="ml-2" />
+                        <BodyText text={barbershopName} className="ml-2" />
                     </div>
                 </div>
-                <BookingTimeDisplay date={new Date()} className="w-[106px] border-l-2" />
+                <BookingTimeDisplay date={date} className="w-[106px] border-l-2" />
             </CardContent>
         </Card>
     )
